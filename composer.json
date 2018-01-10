@@ -1,0 +1,93 @@
+{
+    "name": "zendframework/skeleton-application",
+    "description": "Skeleton Application for Zend Framework zend-mvc applications",
+    "type": "project",
+    "license": "BSD-3-Clause",
+    "keywords": [
+        "framework",
+        "mvc",
+        "zf"
+    ],
+    "homepage": "http://framework.zend.com/",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "php": "^5.6 || ^7.0",
+        "zendframework/zend-component-installer": "^1.0 || ^0.7 || ^1.0.0-dev@dev",
+        "zendframework/zend-mvc": "^3.0.1",
+        "zfcampus/zf-development-mode": "^3.0",
+        "zendframework/zend-cache": "^2.7.1",
+        "zendframework/zend-mvc-form": "^1.0",
+        "zendframework/zend-json": "^3.0",
+        "zendframework/zend-log": "^2.9",
+        "zendframework/zend-mvc-console": "^1.1.10",
+        "zendframework/zend-mvc-i18n": "^1.0",
+        "zendframework/zend-mvc-plugins": "^1.0.1",
+        "zendframework/zend-psr7bridge": "^0.2.2",
+        "zendframework/zend-session": "^2.7.1",
+        "zendframework/zend-servicemanager-di": "^1.0",
+        "doctrine/doctrine-orm-module": "^1.1",
+        "bshaffer/oauth2-server-php": "^1.10",
+        "rwoverdijk/assetmanager": "^1.7",
+        "zendframework/zend-math": "^3.0",
+        "zendframework/zend-navigation": "^2.8"
+    },
+    "autoload": {
+        "psr-4": {
+            "Application\\": "module/Application/src/",
+            "Mail\\": "module/Mail/src/",
+            "Auth\\": "module/Auth/src",
+            "Admin\\": "module/Admin/src/"
+        }
+    },
+    "extra": [],
+    "scripts": {
+        "cs-check": "phpcs",
+        "cs-fix": "phpcbf",
+        "development-disable": "zf-development-mode disable",
+        "development-enable": "zf-development-mode enable",
+        "development-status": "zf-development-mode status",
+        "post-create-project-cmd": [
+            "@development-enable"
+        ],
+        "serve": "php -S 0.0.0.0:8080 -t public public/index.php",
+        "test": "phpunit",
+        "doctrine-update": "php vendor/doctrine/doctrine-module/bin/doctrine-module orm:schema-tool:update --force",
+        "doctrine-drop": "php vendor/doctrine/doctrine-module/bin/doctrine-module orm:schema-tool:drop --force",
+        "doctrine-rebuild": [
+            "php vendor/doctrine/doctrine-module/bin/doctrine-module orm:schema-tool:drop --force",
+            "php vendor/doctrine/doctrine-module/bin/doctrine-module orm:schema-tool:update --force"
+        ],
+        "clean-uploads": [
+            "rm -R public/uploads/*",
+            "mkdir public/uploads/tmp",
+            "mkdir public/uploads/sm",
+            "mkdir public/uploads/removed",
+            "mkdir public/uploads/removed/sm",
+            "chmod -R 777 public/uploads/tmp",
+            "chmod -R 777 public/uploads/sm",
+            "chmod -R 777 public/uploads/removed",
+            "chmod -R 777 public/uploads/removed/sm"
+        ],
+        "create-uploads": [
+            "mkdir public/uploads",
+            "mkdir public/uploads/tmp",
+            "mkdir public/uploads/sm",
+            "mkdir public/uploads/removed",
+            "mkdir public/uploads/removed/sm",
+            "chmod -R 777 public/uploads/tmp",
+            "chmod -R 777 public/uploads/sm",
+            "chmod -R 777 public/uploads/removed",
+            "chmod -R 777 public/uploads/removed/sm"
+        ],
+        "clean-cache": [
+            "rm data/cache/*"
+        ],
+        "clean-orm-proxy": [
+            "rm data/DoctrineORMModule/Proxy/*"
+        ]
+    },
+    "require-dev": {
+        "zendframework/zend-developer-tools": "^1.1.0"
+    }
+}

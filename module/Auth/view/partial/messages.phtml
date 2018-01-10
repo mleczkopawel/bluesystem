@@ -1,0 +1,61 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: pawel
+ * Date: 19.11.17
+ * Time: 11:29
+ */
+?>
+<script>
+    toastr.options = {
+        closeButton: true,
+        progressBar: true,
+        preventDuplicates: true,
+        positionClass: 'toast-top-right',
+        onclick: null
+    };
+</script>
+<?php
+foreach ($messages as $key => $messagess) {
+    if ($key == 'success') {
+        foreach ($messagess as $items) {
+            if (is_array($items)) {
+                foreach ($items as $item) {
+                    echo '<script>toastr.success(\'' . $item . '\');</script>';
+                }
+            } else {
+                echo '<script>toastr.success(\'' . $items . '\');</script>';
+            }
+        }
+    } elseif ($key == 'info') {
+        foreach ($messagess as $items) {
+            if (is_array($items)) {
+                foreach ($items as $item) {
+                    echo '<script>toastr.info(\'' . $item . '\');</script>';
+                }
+            } else {
+                echo '<script>toastr.info(\'' . $items . '\');</script>';
+            }
+        }
+    } elseif ($key == 'danger') {
+        foreach ($messagess as $items) {
+            if (is_array($items)) {
+                foreach ($items as $item) {
+                    echo '<script>toastr.warning(\'' . $item . '\');</script>';
+                }
+            } else {
+                echo '<script>toastr.warning(\'' . $items . '\');</script>';
+            }
+        }
+    } elseif ($key == 'error') {
+        foreach ($messagess as $items) {
+            if (is_array($items)) {
+                foreach ($items as $item) {
+                    echo '<script>toastr.error(\'' . $item . '\');</script>';
+                }
+            } else {
+                echo '<script>toastr.error(\'' . $items . '\');</script>';
+            }
+        }
+    }
+}

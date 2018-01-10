@@ -1,0 +1,21 @@
+div#user-forms {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%,-50%);
+    -moz-transform: translate(-50%,-50%);
+    -o-transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    width: 50%;
+    height: 50%;
+}
+
+input.checkbox-paml {
+    position: absolute;
+    top: -2px;
+    left: 30%;
+}
+
+body.gray-bg {
+    background-color: #242424;
+}

@@ -1,0 +1,36 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: pawel
+ * Date: 02.12.17
+ * Time: 23:55
+ */
+$container = $this->container;
+?>
+<ul class="<?= $this->navigation($container)->menu()->getUlClass(); ?>">
+    <?php foreach ($container as $page): ?>
+        <li <?php if ($page->isActive()) echo 'class="active"';?>>
+            <?php $hasChildren = $page->hasPages(); ?>
+            <a href="<?= $page->getHref(); ?> <?php if ($page->getTarget() !== '') echo $page->getTarget(); ?> ">
+                <?php if ($page->get('icon') !== '') echo '<i class="' . $page->get('icon') . '"></i>'; ?>
+                <span class="nav-label"><?= $page->getLabel() ?></span>
+                <?php if ($hasChildren) echo '<span class="fa fa-arrow"></span>'; ?>
+            </a>
+            <?php if ($hasChildren): ?>
+                <ul class="nav nav-second-level collapse" style="height: 0px;">
+                    <?php foreach ($page->getPages() as $child): ?>
+                        <?php if ($child->getLabel() != 'Edytuj'): ?>
+                            <li <?php if ($child->isActive()) echo 'class="active"'; ?>>
+                                <?php $id = $child->getId() ? '/' . $child->getId() : null; ?>
+                                <a href="/<?= $child->getRoute() . '/' . $child->getAction() . $id; ?>" <?php if ($child->getTarget !== '') echo 'target="' . $child->getTarget() . '"'; ?>>
+                                    <?php if ($child->get('icon') !== '') echo '<i class="' . $child->get('icon') . '"></i>'; ?>
+                                    <?= $child->getLabel(); ?>
+                                </a>
+                            </li>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                </ul>
+            <?php endif; ?>
+        </li>
+    <?php endforeach; ?>
+</ul>

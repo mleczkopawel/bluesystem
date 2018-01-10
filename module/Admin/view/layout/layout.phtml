@@ -1,0 +1,111 @@
+<?= $this->doctype() ?>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <?= $this->headTitle(Application\Module::APP_NAME . ' | Panel - Dashboard')->setSeparator(' - ')->setAutoEscape(false) ?>
+
+    <?= $this->headMeta()
+        ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+        ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+    ?>
+
+    <!-- Le styles -->
+    <?= $this->headLink(['rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/logo.ico'])
+        ->prependStylesheet($this->basePath() . '/css/select2/select2.min.css')
+        ->prependStylesheet($this->basePath() . '/css/chosen/bootstrap-chosen.css')
+        ->prependStylesheet($this->basePath() . '/css/toastr/toastr.min.css')
+        ->prependStylesheet($this->basePath() . '/css/dataTables/datatables.min.css')
+        ->prependStylesheet($this->basePath() . '/js/plupload/jquery.plupload.queue/css/jquery.plupload.queue.css')
+        ->prependStylesheet($this->basePath() . '/font-awesome/css/font-awesome.min.css')
+        ->prependStylesheet($this->basePath() . '/css/iCheck/custom.css')
+        ->prependStylesheet($this->basePath() . '/css/paml-admin.css')
+        ->prependStylesheet($this->basePath() . '/css/style-admin.css')
+        ->prependStylesheet($this->basePath() . '/css/animate.css')
+        ->prependStylesheet($this->basePath() . '/css/bootstrap.css')
+    ?>
+
+    <!-- Scripts -->
+    <?= $this->headScript()
+        ->prependFile($this->basePath() . '/js/select2/select2.full.min.js')
+        ->prependFile($this->basePath() . '/js/chosen/chosen.jquery.js')
+        ->prependFile($this->basePath() . '/js/toastr/toastr.min.js')
+        ->prependFile($this->basePath() . '/js/dataTables/datatables.min.js')
+        ->prependFile($this->basePath() . '/js/plupload/jquery.plupload.queue/jquery.plupload.queue.js')
+        ->prependFile($this->basePath() . '/js/plupload/plupload.full.min.js')
+        ->prependFile($this->basePath() . '/js/pace/pace.min.js')
+        ->prependFile($this->basePath() . '/js/metisMenu/jquery.metisMenu.js')
+        ->prependFile($this->basePath() . '/js/slimscroll/jquery.slimscroll.min.js')
+        ->prependFile($this->basePath() . '/js/iCheck/icheck.min.js')
+        ->prependFile($this->basePath() . '/js/inspinia.js')
+        ->prependFile($this->basePath() . '/js/bootstrap.js')
+        ->prependFile($this->basePath() . '/js/jquery-3.1.1.min.js')
+    ?>
+
+    <script src="cdn.datatables.net/plug-ins/1.10.16/i18n/Polish.json"></script>
+</head>
+<body>
+<div id="wrapper">
+    <nav class="navbar-default navbar-static-side" role="navigation">
+        <div class="sidebar-collapse">
+            <ul class="nav metismenu" id="side-menu">
+                <li class="nav-header">
+                    <div class="dropdown profile-element">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <span class="clear">
+                                <span class="block m-t-xs">
+                                    <strong class="font-bold"><?= $this->identity()['login'] ?></strong>
+                                </span>
+                                <span class="text-muted text-xs block">Akcja <b class="caret"></b></span>
+                            </span>
+                            </a>
+                        <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                            <li><a href="<?php echo $this->url('auth', ['action' => 'logout']); ?>">Wyloguj</a></li>
+                        </ul>
+                    </div>
+                    <div class="logo-element">
+                        <img style="width: 85%" src="<?= $this->basePath('img/logo.png') ?>">
+                    </div>
+                </li>
+                <?= $this->navigation('SystemNavigation')->menu()->setMinDepth(0)->setMaxDepth(3)->setUlClass('nav metismenu js-menu')->setPartial('partial/navigation') ?>
+            </ul>
+
+        </div>
+    </nav>
+
+    <div id="page-wrapper" class="gray-bg">
+        <div class="row border-bottom">
+            <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
+                <div class="navbar-header">
+                    <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+                </div>
+                <ul class="nav navbar-top-links navbar-right">
+                    <li>
+                        <a href="<?php echo $this->url('auth', ['action' => 'logout']); ?>">
+                            <i class="fa fa-sign-out"></i> Wyloguj
+                        </a>
+                    </li>
+                </ul>
+
+            </nav>
+        </div>
+        <div class="wrapper wrapper-content animated fadeInRight">
+            <div class="row">
+                <div class="col-lg-12">
+                    <?= $this->navigation('navigation')->breadcrumbs()->setMinDepth(0)->setPartial('partial/breadcrumb') ?>
+                    <div class="text-center m-t-lg" style="text-align: left">
+                        <?= $this->content ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <div>
+                <strong>Copyright</strong> Paweł Mleczko
+            </div>
+        </div>
+    </div>
+</div>
+<?= $this->inlineScript() ?>
+</body>
+</html>

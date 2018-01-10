@@ -1,0 +1,12 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: pawel
+ * Date: 08.01.18
+ * Time: 10:38
+ */
+
+echo $this->partial('partial/client-form', ['messages' => $messages, 'form' => $form, 'hide' => true, 'id' => $id, 'title' => $title]);
+echo $this->partial('partial/user-list', ['users' => $users, 'form' => $clientUserGroupForm]);
+echo $this->partial('partial/client-groups', ['groups' => $groups, 'form' => $addClientGroupForm]);
+
