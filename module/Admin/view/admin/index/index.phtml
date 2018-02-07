@@ -1,1 +1,87 @@
 <?= $this->partial('partial/messages', ['messages' => $messages]); ?>
+<div class="row">
+    <div class="col-md-3">
+        <div class="widget style1 navy-bg">
+            <div class="row">
+                <div class="col-xs-4">
+                    <i class="fa fa-microchip fa-5x"></i>
+                </div>
+                <div class="col-xs-8 text-right">
+                    <span> Aplikacji </span>
+                    <h2 class="font-bold"><?= $clients ?></h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="widget style1 lazur-bg">
+            <div class="row">
+                <div class="col-xs-4">
+                    <i class="fa fa-group fa-5x"></i>
+                </div>
+                <div class="col-xs-8 text-right">
+                    <span> Grup </span>
+                    <h2 class="font-bold"><?= $groups ?></h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="widget style1 red-bg">
+            <div class="row">
+                <div class="col-xs-4">
+                    <i class="fa fa-user fa-5x"></i>
+                </div>
+                <div class="col-xs-8 text-right">
+                    <span> Użytkowników </span>
+                    <h2 class="font-bold"><?= $users ?></h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="widget style1 yellow-bg">
+            <div class="row">
+                <div class="col-xs-4">
+                    <i class="fa fa-empire fa-5x"></i>
+                </div>
+                <div class="col-xs-8 text-right">
+                    <span> Logów </span>
+                    <h2 class="font-bold"><?= $logs ?></h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="widget lazur-bg p-xl">
+            <h2>Zalogowany</h2>
+            <h3><strong><?= $user->getLogin() ?></strong></h3>
+            <ul class="list-unstyled m-t-md">
+                <li>
+                    <span class="fa fa-envelope m-r-xs"></span>
+                    <label>Email:</label><?= $user->getEmail(); ?>
+                </li>
+                <li>
+                    <span class="fa fa-home m-r-xs"></span>
+                    <label>Data ostatniego logowania:</label><?= $user->getDateLogin()->format('d.m.Y H:m:i'); ?>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="widget navy-bg p-xl">
+            <h2>Ostatnio logowany</h2>
+            <h3><strong><?= $userLastLogged->getLogin() ?></strong></h3>
+            <ul class="list-unstyled m-t-md">
+                <li>
+                    <span class="fa fa-envelope m-r-xs"></span>
+                    <label>Email:</label><?= $userLastLogged->getEmail(); ?>
+                </li>
+                <li>
+                    <span class="fa fa-home m-r-xs"></span>
+                    <label>Data ostatniego logowania:</label><?= $userLastLogged->getDateLogin()->format('d.m.Y H:m:i'); ?>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

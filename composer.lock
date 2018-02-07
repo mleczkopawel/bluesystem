@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "7f7ed0c4d0ecac830c01b0774d7eab19",
+    "content-hash": "e368db90db39e23c1a51914e82cded65",
     "packages": [
         {
             "name": "bshaffer/oauth2-server-php",
@@ -888,6 +888,49 @@
             "time": "2017-12-20T00:38:15+00:00"
         },
         {
+            "name": "firebase/php-jwt",
+            "version": "v4.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/firebase/php-jwt.git",
+                "reference": "dccf163dc8ed7ed6a00afc06c51ee5186a428d35"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/firebase/php-jwt/zipball/dccf163dc8ed7ed6a00afc06c51ee5186a428d35",
+                "reference": "dccf163dc8ed7ed6a00afc06c51ee5186a428d35",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Firebase\\JWT\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Neuman Vong",
+                    "email": "neuman+pear@twilio.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Anant Narayanan",
+                    "email": "anant@php.net",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A simple library to encode and decode JSON Web Tokens (JWT) in PHP. Should conform to the current spec.",
+            "homepage": "https://github.com/firebase/php-jwt",
+            "time": "2016-07-18T04:51:16+00:00"
+        },
+        {
             "name": "kriswallsmith/assetic",
             "version": "v1.4.0",
             "source": {
@@ -963,6 +1006,61 @@
                 "minification"
             ],
             "time": "2016-11-11T18:43:20+00:00"
+        },
+        {
+            "name": "multidots/zf3-rest-api",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/multidots/zf3-rest-api.git",
+                "reference": "079c72b0b56ff319e7a34e48b39b0321a1455eee"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/multidots/zf3-rest-api/zipball/079c72b0b56ff319e7a34e48b39b0321a1455eee",
+                "reference": "079c72b0b56ff319e7a34e48b39b0321a1455eee",
+                "shasum": ""
+            },
+            "require": {
+                "firebase/php-jwt": "^4.0",
+                "zendframework/zend-json": "^3.0"
+            },
+            "type": "library",
+            "extra": {
+                "zf": {
+                    "module": "RestApi"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "RestApi\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Multidots",
+                    "homepage": "http://www.multidots.com",
+                    "role": "Author"
+                },
+                {
+                    "name": "Community",
+                    "homepage": "https://github.com/multidots/zf3-rest-api/graphs/contributors"
+                }
+            ],
+            "description": "Zend Framework 3 module to build REST APIs",
+            "homepage": "https://github.com/multidots/zf3-rest-api",
+            "keywords": [
+                "REST API",
+                "Zend Framework",
+                "cors",
+                "rest",
+                "zf3"
+            ],
+            "time": "2017-05-23T09:23:44+00:00"
         },
         {
             "name": "paragonie/random_compat",
@@ -1744,28 +1842,28 @@
         },
         {
             "name": "zendframework/zend-console",
-            "version": "2.6.0",
+            "version": "2.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-console.git",
-                "reference": "cbbdfdfa0564aa20d1c6c6ef3daeafe6aec02360"
+                "reference": "e8aa08da83de3d265256c40ba45cd649115f0e18"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-console/zipball/cbbdfdfa0564aa20d1c6c6ef3daeafe6aec02360",
-                "reference": "cbbdfdfa0564aa20d1c6c6ef3daeafe6aec02360",
+                "url": "https://api.github.com/repos/zendframework/zend-console/zipball/e8aa08da83de3d265256c40ba45cd649115f0e18",
+                "reference": "e8aa08da83de3d265256c40ba45cd649115f0e18",
                 "shasum": ""
             },
             "require": {
-                "php": "^5.5 || ^7.0",
-                "zendframework/zend-stdlib": "^2.7 || ^3.0"
+                "php": "^5.6 || ^7.0",
+                "zendframework/zend-stdlib": "^2.7.7 || ^3.1"
             },
             "require-dev": {
-                "fabpot/php-cs-fixer": "1.7.*",
-                "phpunit/phpunit": "^4.0",
-                "zendframework/zend-filter": "^2.6",
-                "zendframework/zend-json": "^2.6",
-                "zendframework/zend-validator": "^2.5"
+                "phpunit/phpunit": "^5.7.23 || ^6.4.3",
+                "zendframework/zend-coding-standard": "~1.0.0",
+                "zendframework/zend-filter": "^2.7.2",
+                "zendframework/zend-json": "^2.6 || ^3.0",
+                "zendframework/zend-validator": "^2.10.1"
             },
             "suggest": {
                 "zendframework/zend-filter": "To support DefaultRouteMatcher usage",
@@ -1774,8 +1872,8 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.6-dev",
-                    "dev-develop": "2.7-dev"
+                    "dev-master": "2.7.x-dev",
+                    "dev-develop": "2.8.x-dev"
                 }
             },
             "autoload": {
@@ -1787,12 +1885,13 @@
             "license": [
                 "BSD-3-Clause"
             ],
-            "homepage": "https://github.com/zendframework/zend-console",
+            "description": "Build console applications using getopt syntax or routing, complete with prompts",
             "keywords": [
+                "ZendFramework",
                 "console",
-                "zf2"
+                "zf"
             ],
-            "time": "2016-02-09T17:15:12+00:00"
+            "time": "2018-01-25T19:08:04+00:00"
         },
         {
             "name": "zendframework/zend-di",
@@ -4040,7 +4139,8 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "zendframework/zend-component-installer": 20
+        "zendframework/zend-component-installer": 20,
+        "multidots/zf3-rest-api": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,

@@ -60,12 +60,15 @@ class Module implements ConfigProviderInterface {
         $actionName = str_replace('-', '', lcfirst(ucwords($actionName, '-')));
 
         $authManager = $mvcEvent->getApplication()->getServiceManager()->get(AuthManager::class);
-
-        if (!$authManager->filterAccess($controllerName, $actionName)) {
-            if (!$authManager->hasIdentity() && 'Auth\Controller\AuthController' != $controllerName || 'Auth\Controller\OAuthController' != $controllerName) {
-                $controller->plugin('redirect')->toUrl('/auth/login');
-            } else {
-                throw new \Exception('Not allowed', 5001);
+        if ($actionName == 'cli' || $actionName == 'createSuperUser' || $actionName == 'createUser') {
+            echo 'Przepuszczam dalej' . PHP_EOL;
+        } else {
+            if (!$authManager->filterAccess($controllerName, $actionName)) {
+                if (!$authManager->hasIdentity() && 'Auth\Controller\AuthController' != $controllerName || 'Auth\Controller\OAuthController' != $controllerName) {
+                    $controller->plugin('redirect')->toUrl('/auth/login');
+                } else {
+                    throw new \Exception('Not allowed', 5001);
+                }
             }
         }
     }

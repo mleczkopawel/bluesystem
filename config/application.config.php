@@ -10,8 +10,10 @@ $modulesGlobal = require  __DIR__ . '/modules.config.php';
 $modulesMail = require __DIR__ . '/../module/Mail/config/modules.config.php';
 $modulesAuth = require __DIR__ . '/../module/Auth/config/modules.config.php';
 $modulesAdmin = require __DIR__ . '/../module/Admin/config/modules.config.php';
+$modulesApi = require __DIR__ . '/../module/Api/config/modules.config.php';
+$modulesLog = require __DIR__ . '/../module/Log/config/modules.config.php';
 
-$modules = array_merge($modulesGlobal, $modulesMail, $modulesAuth, $modulesAdmin);
+$modules = array_merge($modulesGlobal, $modulesMail, $modulesAuth, $modulesAdmin, $modulesApi, $modulesLog);
 
 return [
     // Retrieve list of modules used in this application.

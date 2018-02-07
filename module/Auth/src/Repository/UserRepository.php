@@ -9,6 +9,7 @@
 namespace Auth\Repository;
 
 
+use Auth\Entity\ClientsUsersGroups;
 use Auth\Entity\User;
 use Doctrine\ORM\EntityRepository;
 use OAuth2\Request;
@@ -32,18 +33,19 @@ class UserRepository extends EntityRepository implements UserCredentialsInterfac
         $clientName = Request::createFromGlobals()->server['PHP_AUTH_USER'];
 
         $user = $this->findOneBy(['email' => $username]);
-        if (!$user) {
+        if (!count($user)) {
           $user = $this->findOneBy(['login' => $username]);
         }
         if ($user && $user->getStatus() != User::STATUS_RETIRED) {
-            $clients = $user->getClients();
+            $clientsUsersGroups = $entityManager->getRepository(ClientsUsersGroups::class)->findBy(['user' => $user]);
             $accessFlag = false;
-            foreach ($clients as $client) {
-                if ($client->getClientIdentifier() == $clientName) {
+            foreach ($clientsUsersGroups as $clientsUsersGroup) {
+                if ($clientsUsersGroup->getClient()->getClientIdentifier() == $clientName) {
                     $accessFlag = true;
                     break;
                 }
             }
+
 
             if ($accessFlag) {
                 $response = $user->verifyPassword($password);
@@ -51,14 +53,15 @@ class UserRepository extends EntityRepository implements UserCredentialsInterfac
                     $user->setDateLogin(new \DateTime());
                     $entityManager->persist($user);
                     $entityManager->flush();
+                    return 'good';
+                } else {
+                    return 'pass';
                 }
-                return $response;
             }
             else
-                return false;
+                return 'access';
         }
-
-        return false;
+        return 'status';
     }
 
     /**
@@ -67,11 +70,28 @@ class UserRepository extends EntityRepository implements UserCredentialsInterfac
      */
     public function getUserDetails($username) {
         $user = $this->findOneBy(['email' => $username]);
+        if (!$user) {
+            $user = $this->findOneBy(['login' => $username]);
+        }
         if ($user) {
             $user = $user->toArray();
             $user['user_id'] = $user['id'];
         }
 
         return $user;
+    }
+
+    /**
+     * @return array|mixed
+     */
+    public function findAll() {
+        return $this->getEntityManager()->createQuery('SELECT u FROM ' . User::class . ' u WHERE u.id != 1')->getResult();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function findLastLogged() {
+        return $this->getEntityManager()->createQuery('SELECT u FROM ' . User::class . ' u WHERE u.id != 1 ORDER BY u.dateLogin DESC')->setMaxResults(1)->getResult();
     }
 }

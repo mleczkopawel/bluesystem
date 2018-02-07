@@ -13,10 +13,6 @@ namespace Auth\Traits;
  * Trait ArrayOperations
  * @package Auth\Traits
  */
-/**
- * Trait ArrayOperations
- * @package Auth\Traits
- */
 trait ArrayOperations
 {
     /**

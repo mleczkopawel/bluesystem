@@ -19,6 +19,7 @@ use Doctrine\ORM\EntityManager;
 use Mail\Entity\Mail;
 use Mail\Service\MailManager;
 use Zend\Http\Response;
+use Zend\Log\Logger;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Mvc\MvcEvent;
 use Zend\Mvc\Plugin\FlashMessenger\FlashMessenger;
@@ -122,19 +123,27 @@ class AuthController extends AbstractActionController {
                     $user->setDateLogin(new \DateTime());
                     $this->entityManager->persist($user);
                     $this->entityManager->flush();
-                    return $this->redirect()->toRoute('admin');
+                    $this->logger()->log('auth', 'user ' . $data['login'] .' logged successfully', Logger::INFO);
+                    return $this->redirect()->toRoute('admin/dashboard');
                 } else {
+                    $errors = [];
                     foreach ($result->getMessages() as $message) {
+                        $errors[] = AuthManager::MESSAGE_TEMPLATES[$message];
                         $this->flashMessenger()->addMessage(AuthManager::MESSAGE_TEMPLATES[$message], FlashMessenger::NAMESPACE_ERROR);
                     }
+
+                    $this->logger()->log('auth', json_encode($errors) , Logger::ERR);
                     return $this->redirect()->toRoute('auth', ['action' => 'login']);
                 }
             } else {
+                $errors = [];
                 foreach ($this->userLoginForm->getMessages() as $key => $messages) {
                     foreach ($messages as $message) {
+                        $errors[] = $this->userLoginForm->messageTemplates[$key] . ': ' . $message;
                         $this->flashMessenger()->addMessage($this->userLoginForm->messageTemplates[$key] . ': ' . $message, FlashMessenger::NAMESPACE_ERROR);
                     }
                 }
+                $this->logger()->log('auth', json_encode($errors) , Logger::ERR);
                 return $this->redirect()->toRoute('auth', ['action' => 'login']);
             }
         }
@@ -163,6 +172,7 @@ class AuthController extends AbstractActionController {
                 $mail->setLayout('auth/elayout');
                 $mail->setTemplate('email/register');
                 $this->mailManager->create($mail);
+                $this->logger()->log('auth', 'user ' . $user->getLogin() .' registered successfully', Logger::INFO);
                 $this->flashMessenger()->addMessage('Zarejestrowano pomyślnie', FlashMessenger::NAMESPACE_SUCCESS);
                 return $this->redirect()->toRoute('auth', ['action' => 'login']);
             } else {

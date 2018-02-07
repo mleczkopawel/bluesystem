@@ -10,7 +10,10 @@ namespace Auth\Factory;
 
 
 use Auth\Controller\OAuthController;
+use Auth\Form\UserRegisterForm;
 use Auth\Service\OAuthService;
+use Auth\Service\UserManager;
+use Doctrine\ORM\EntityManager;
 use Interop\Container\ContainerInterface;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
@@ -33,7 +36,10 @@ class OAuthControllerFactory implements FactoryInterface {
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null) {
         try {
             return new OAuthController(
-                $container->get(OAuthService::class)
+                $container->get(OAuthService::class),
+                $container->get('FormElementManager')->get(UserRegisterForm::class),
+                $container->get(UserManager::class),
+                $container->get(EntityManager::class)
             );
         } catch (NotFoundExceptionInterface $e) {
         } catch (ContainerExceptionInterface $e) {

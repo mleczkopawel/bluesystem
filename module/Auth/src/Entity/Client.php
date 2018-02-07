@@ -13,6 +13,7 @@ use Auth\Traits\Main;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\PersistentCollection;
+use Log\Traits\ClientLogs;
 
 
 /**
@@ -26,14 +27,15 @@ class Client extends EncryptableField {
 
     use Main;
     use ArrayOperations;
+    use ClientLogs;
 
     /**
      *
      */
     const CLIENT_TYPES = [
-        0 => 'web',
-        1 => 'android',
-        2 => 'ios',
+        0 => ' web',
+        1 => ' android',
+        2 => ' ios',
     ];
 
     /**
@@ -65,18 +67,6 @@ class Client extends EncryptableField {
     private $redirectUri = '';
 
     /**
-     * @ORM\ManyToMany(targetEntity="Auth\Entity\User", inversedBy="clients")
-     * @ORM\JoinTable(name="clients_users")
-     */
-    private $users;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="Auth\Entity\ClientGroups", inversedBy="clients")
-     * @ORM\JoinTable(name="clients_groups")
-     */
-    private $groups;
-
-    /**
      * @var integer
      *
      * @ORM\Column(name="client_type", type="integer", nullable=true)
@@ -84,11 +74,15 @@ class Client extends EncryptableField {
     private $clientType;
 
     /**
+     * @ORM\OneToMany(targetEntity="Auth\Entity\ClientsUsersGroups", mappedBy="client")
+     */
+    private $clientsUsersGroups;
+
+    /**
      * Client constructor.
      */
     public function __construct() {
-        $this->users = new ArrayCollection();
-        $this->groups = new ArrayCollection();
+        $this->clientsUsersGroups = new ArrayCollection();
     }
 
 
@@ -155,33 +149,6 @@ class Client extends EncryptableField {
     }
 
     /**
-     * @return mixed
-     */
-    public function getUsers(): PersistentCollection
-    {
-        return $this->users;
-    }
-
-    /**
-     * @param mixed $users
-     * @return Client
-     */
-    public function setUsers(array $users): Client
-    {
-        $this->users = $users;
-        return $this;
-    }
-
-    /**
-     * @param User $user
-     * @return Client
-     */
-    public function addUser(User $user): Client {
-        $this->users[] = $user;
-        return $this;
-    }
-
-    /**
      * @return int
      */
     public function getClientType(): int
@@ -227,27 +194,18 @@ class Client extends EncryptableField {
     /**
      * @return mixed
      */
-    public function getGroups()
+    public function getClientsUsersGroups()
     {
-        return $this->groups;
+        return $this->clientsUsersGroups;
     }
 
     /**
-     * @param mixed $groups
+     * @param mixed $clientsUsersGroups
      * @return Client
      */
-    public function setGroups($groups)
+    public function setClientsUsersGroups($clientsUsersGroups)
     {
-        $this->groups = $groups;
-        return $this;
-    }
-
-    /**
-     * @param $group
-     * @return $this
-     */
-    public function addGroup($group) {
-        $this->groups[] = $group;
+        $this->clientsUsersGroups = $clientsUsersGroups;
         return $this;
     }
 }

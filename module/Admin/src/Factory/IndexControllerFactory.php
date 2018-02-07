@@ -33,7 +33,8 @@ class IndexControllerFactory implements FactoryInterface {
         try {
             return new IndexController(
                 $container->get(EntityManager::class),
-                $container->get(FlashMessengerService::class)
+                $container->get(FlashMessengerService::class),
+                $container->get('Config')['superuser']
             );
         } catch (NotFoundExceptionInterface $e) {
             echo $e->getMessage();

@@ -9,7 +9,7 @@
 namespace Admin\Form;
 
 
-use Auth\Entity\ClientGroups;
+use Auth\Entity\Client;
 use Doctrine\ORM\EntityManager;
 use Zend\Form\Element\Hidden;
 use Zend\Form\Element\Select;
@@ -38,6 +38,11 @@ class ChangeClientUserGroupForm extends Form {
     const SUBMIT = 'submit';
 
     /**
+     * @var Client
+     */
+    private $client;
+
+    /**
      * @var EntityManager
      */
     private $entityManager;
@@ -57,15 +62,6 @@ class ChangeClientUserGroupForm extends Form {
      *
      */
     public function init() {
-        $groups = $this->entityManager->getRepository(ClientGroups::class)->findAll();
-        $valueOptions = [];
-        foreach ($groups as $group) {
-            $valueOptions[] = [
-                'value' => $group->getId(),
-                'label' => $group->getName(),
-            ];
-        }
-
         $this->add([
             'name' => self::USER,
             'type' => Hidden::class,
@@ -79,12 +75,13 @@ class ChangeClientUserGroupForm extends Form {
             'type' => Select::class,
             'options' => [
                 'label' => 'Grupy',
-                'value_options' => $valueOptions,
+                'empty_option' => 'Wybierz grupę',
             ],
             'attributes' => [
                 'id' => self::GROUP,
                 'name' => self::GROUP,
                 'class' => 'form-control select2',
+                'style' => 'width: 100%',
                 'required' => true,
             ],
         ]);
@@ -100,5 +97,11 @@ class ChangeClientUserGroupForm extends Form {
         ]);
     }
 
-
+    /**
+     * @param Client $client
+     */
+    public function setClient(Client $client)
+    {
+        $this->client = $client;
+    }
 }

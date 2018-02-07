@@ -30,14 +30,18 @@
         "bshaffer/oauth2-server-php": "^1.10",
         "rwoverdijk/assetmanager": "^1.7",
         "zendframework/zend-math": "^3.0",
-        "zendframework/zend-navigation": "^2.8"
+        "zendframework/zend-navigation": "^2.8",
+        "zendframework/zend-console": "^2.7",
+        "multidots/zf3-rest-api": "dev-master"
     },
     "autoload": {
         "psr-4": {
             "Application\\": "module/Application/src/",
             "Mail\\": "module/Mail/src/",
             "Auth\\": "module/Auth/src",
-            "Admin\\": "module/Admin/src/"
+            "Admin\\": "module/Admin/src/",
+            "Api\\": "module/Api/src",
+            "Log\\": "module/Log/src"
         }
     },
     "extra": [],
@@ -52,12 +56,23 @@
         ],
         "serve": "php -S 0.0.0.0:8080 -t public public/index.php",
         "test": "phpunit",
-        "doctrine-update": "php vendor/doctrine/doctrine-module/bin/doctrine-module orm:schema-tool:update --force",
+        "doctrine-update": [
+            "php vendor/doctrine/doctrine-module/bin/doctrine-module orm:schema-tool:update --force",
+            "php public/index.php create-super-user"
+        ],
         "doctrine-drop": "php vendor/doctrine/doctrine-module/bin/doctrine-module orm:schema-tool:drop --force",
         "doctrine-rebuild": [
             "php vendor/doctrine/doctrine-module/bin/doctrine-module orm:schema-tool:drop --force",
-            "php vendor/doctrine/doctrine-module/bin/doctrine-module orm:schema-tool:update --force"
+            "php vendor/doctrine/doctrine-module/bin/doctrine-module orm:schema-tool:update --force",
+            "php public/index.php create-super-user"
         ],
+        "doctrine-cc": [
+            "php public/index.php orm:clear-cache:metadata",
+            "php public/index.php orm:clear-cache:query",
+            "php public/index.php orm:clear-cache:result"
+        ],
+        "doctrine-dump-sql": "php public/index.php orm:schema-tool:update --dump-sql",
+        "create-su": "php public/index.php create-super-user",
         "clean-uploads": [
             "rm -R public/uploads/*",
             "mkdir public/uploads/tmp",

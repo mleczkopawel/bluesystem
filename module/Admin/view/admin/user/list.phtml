@@ -1,0 +1,100 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: pawel
+ * Date: 08.01.18
+ * Time: 10:29
+ */
+?>
+<?= $this->partial('partial/messages', ['messages' => $messages]); ?>
+<div class="col-lg-12">
+    <div id="ibox" class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>Lista użytkowników</h5>
+            <div class="ibox-tools">
+                <a class="collapse-link">
+                    <i class="fa fa-chevron-up"></i>
+                </a>
+            </div>
+        </div>
+        <div class="ibox-content" style="min-height: 200px">
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered table-hover dataTables-example" width="100%">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nazwa</th>
+                        <th>Email</th>
+                        <th>Aplikacje</th>
+                        <th style="width: 75px">Akcja</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+                    /**
+                     * @var \Auth\Entity\User $user
+                     */
+                    ?>
+                    <?php $i = 1; foreach ($users as $user): ?>
+                        <tr>
+                            <td><?= $i ?></td>
+                            <td><?= $user->getLogin(); ?></td>
+                            <td><?= $user->getEmail(); ?></td>
+                            <td>
+                                <?php if (count($user->getClientsUsersGroups())): ?>
+                                    <?php $applications = []; foreach ($user->getClientsUsersGroups() as $clientsUsersGroup): ?>
+                                        <?php $applications[] = $clientsUsersGroup->getClient()->getName(); ?>
+                                    <?php endforeach; ?>
+                                    <?= implode(', ', array_unique($applications)); ?>
+                                <?php else: ?>
+                                    Brak aplikacji
+                                <?php endif; ?>
+                            </td>
+                            <td>
+                                <a href="<?= $this->url('admin/user', ['action' => 'add', 'id' => $user->getId()]); ?>" class="btn btn-primary btn-xs">Edytuj</a>
+                                <a href="<?= $this->url('admin/user', ['action' => 'remove', 'id' => $user->getId()]); ?>" class="btn btn-danger btn-xs">Usuń</a>
+                            </td>
+                        </tr>
+                        <?php $i++; endforeach; ?>
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <th>#</th>
+                        <th>Nazwa</th>
+                        <th>Email</th>
+                        <th>Aplikacje</th>
+                        <th>Akcja</th>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function(){
+        $('.dataTables-example').DataTable({
+            pageLength: 10,
+            responsive: true,
+            dom: '<"html5buttons"B>lTfgitp',
+            buttons: [
+                {extend: 'copy'},
+                {extend: 'csv'},
+                {extend: 'excel', title: 'Użytkownicy'},
+                {extend: 'pdf', title: 'Użytkownicy'},
+                {extend: 'print',
+                    customize: function (win){
+                        $(win.document.body).addClass('white-bg');
+                        $(win.document.body).css('font-size', '10px');
+                        $(win.document.body).find('table')
+                            .addClass('compact')
+                            .css('font-size', 'inherit');
+                    }
+                }
+            ],
+            language: {
+                "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Polish.json"
+            }
+        });
+    });
+</script>

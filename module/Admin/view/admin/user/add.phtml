@@ -1,0 +1,104 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: pawel
+ * Date: 08.01.18
+ * Time: 10:29
+ */
+use Admin\Form\AddUserForm;
+use Admin\Form\UserGroupForm;
+
+?>
+<?= $this->partial('partial/messages', ['messages' => $messages]); ?>
+<div class="col-lg-12">
+    <div id="ibox" class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>Dodaj użytkownika</h5>
+            <div class="ibox-tools">
+                <a class="collapse-link">
+                    <i class="fa fa-chevron-up"></i>
+                </a>
+            </div>
+        </div>
+        <div class="ibox-content" style="min-height: 200px">
+            <div class="form-group">
+                <?php $form->prepare(); ?>
+                <?= $this->form()->openTag($form); ?>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <?= $this->formLabel($form->get(AddUserForm::NAME)) ?>
+                            <?= $this->formInput($form->get(AddUserForm::NAME)) ?>
+                        </div>
+                        <div class="form-group">
+                            <?= $this->formLabel($form->get(AddUserForm::EMAIL)) ?>
+                            <?= $this->formInput($form->get(AddUserForm::EMAIL)) ?>
+                        </div>
+                        <div class="form-group">
+                            <?= $this->formLabel($form->get(AddUserForm::PASSWORD)) ?>
+                            <?= $this->formInput($form->get(AddUserForm::PASSWORD)) ?>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <?= $this->formLabel($form->get(AddUserForm::GROUP)); ?>
+                            <?= $this->formSelect($form->get(AddUserForm::GROUP)); ?>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <?= $this->formSubmit($form->get(AddUserForm::SUBMIT)); ?>
+                        <?= $this->form()->closeTag(); ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<?php if ($userGroupForm): ?>
+    <div class="col-lg-12">
+        <div id="ibox" class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Edytuj grupy</h5>
+                <div class="ibox-tools">
+                    <a class="collapse-link">
+                        <i class="fa fa-chevron-up"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="ibox-content" style="min-height: 200px">
+                <div class="form-group">
+                    <?php $userGroupForm->prepare(); ?>
+                    <?= $this->form()->openTag($userGroupForm); ?>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <?php for ($i = 0; $i < $countGroups; $i++): ?>
+                                <div class="form-group">
+                                    <div class="radio i-checks">
+                                        <h3><?= $this->formLabel($userGroupForm->get(UserGroupForm::GROUP . '-' . $i)) ?></h3>
+                                        <?= $this->formRadio($userGroupForm->get(UserGroupForm::GROUP . '-' . $i)) ?>
+                                    </div>
+                                </div>
+                                <hr>
+                            <?php endfor; ?>
+                        </div>
+                        <div class="col-md-12">
+                            <?= $this->formSubmit($userGroupForm->get(UserGroupForm::SUBMIT)); ?>
+                            <?= $this->form()->closeTag(); ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>
+<script>
+    $(document).ready(function(){
+        $('.i-checks').iCheck({
+            checkboxClass: 'icheckbox_square-green',
+            radioClass: 'iradio_square-green',
+        });
+        $('.select2').select2({
+            placeholder: "Wybierz grupę"
+        });
+    });
+</script>

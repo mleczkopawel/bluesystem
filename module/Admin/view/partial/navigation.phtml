@@ -20,7 +20,7 @@ $container = $this->container;
                 <ul class="nav nav-second-level collapse" style="height: 0px;">
                     <?php foreach ($page->getPages() as $child): ?>
                         <?php if ($child->getLabel() != 'Edytuj'): ?>
-                            <li <?php if ($child->isActive()) echo 'class="active"'; ?>>
+                            <li>
                                 <?php $id = $child->getId() ? '/' . $child->getId() : null; ?>
                                 <a href="/<?= $child->getRoute() . '/' . $child->getAction() . $id; ?>" <?php if ($child->getTarget !== '') echo 'target="' . $child->getTarget() . '"'; ?>>
                                     <?php if ($child->get('icon') !== '') echo '<i class="' . $child->get('icon') . '"></i>'; ?>

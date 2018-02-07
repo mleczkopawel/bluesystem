@@ -30,18 +30,26 @@ class OAuthPlugin extends AbstractPlugin {
      */
     public function __construct(OAuthService $OAuthService) {
         $this->oAuthService = $OAuthService;
+        $this->oAuthService->initServer();
     }
 
     /**
      * @return bool
      */
     public function auth() {
-        if (!$this->oAuthService->getServer()->verifyResourceRequest(Request::createFromGlobals())) {
+        if (!$token = $this->oAuthService->getServer()->verifyResourceRequest(Request::createFromGlobals())) {
             $this->oAuthService->getServer()->getResponse()->send();
             die;
         } else {
-            return true;
+            return $token;
         }
+    }
+
+    /**
+     * @return OAuthService
+     */
+    public function getService() {
+        return $this->oAuthService;
     }
 
 }

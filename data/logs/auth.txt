@@ -1,0 +1,11 @@
+2018-02-04T01:34:07+01:00 INFO (6): user logged successfully
+2018-02-04T01:40:02+01:00 INFO (6): user logged successfully
+2018-02-04T01:46:15+01:00 ERR (3): ["Login: U\u017cytkownik o danym loginie: <strong>pasas<\/strong> nie istnieje"]
+2018-02-04T01:46:48+01:00 ERR (3): ["Z\u0142e has\u0142o"]
+2018-02-04T01:47:12+01:00 INFO (6): user paml123 logged successfully
+2018-02-04T16:45:42+01:00 INFO (6): user paml123 logged successfully
+2018-02-04T21:28:32+01:00 INFO (6): user paml123 logged successfully
+2018-02-04T23:03:52+01:00 ERR (3): ["Z\u0142e has\u0142o"]
+2018-02-04T23:03:58+01:00 INFO (6): user paml123 logged successfully
+2018-02-06T20:44:55+01:00 INFO (6): user paml123 logged successfully
+2018-02-06T23:26:15+01:00 INFO (6): user paml123 logged successfully

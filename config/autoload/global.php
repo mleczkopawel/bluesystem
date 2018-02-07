@@ -37,4 +37,12 @@ return [
         'refresh_token_lifetime' => 30,
         'always_issue_new_refresh_token' => true,
     ],
+    'superuser' => [
+        'login' => 'superuser',
+        'email' => 'superuser@bluesystem.local',
+        'password' => 'zaq1@WSX'
+    ],
+    'logger' => [
+        'path' => __DIR__ . '/../../data/logs/',
+    ],
 ];

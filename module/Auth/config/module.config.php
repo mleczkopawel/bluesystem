@@ -2,6 +2,8 @@
 namespace Auth;
 
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
+use Log\Factory\LoggerPluginFactory;
+use Log\Plugin\LoggerPlugin;
 use Zend\Authentication\AuthenticationService;
 use Zend\Router\Http\Segment;
 use Zend\ServiceManager\Factory\InvokableFactory;
@@ -70,9 +72,11 @@ return [
     'controller_plugins' => [
         'factories' => [
             Plugin\OAuthPlugin::class => Factory\OAuthPluginFactory::class,
+//            LoggerPlugin::class => LoggerPluginFactory::class,
         ],
         'aliases' => [
             'oauth' => Plugin\OAuthPlugin::class,
+//            'logger' => LoggerPlugin::class
         ],
     ],
     'asset_manager' => [
@@ -131,9 +135,10 @@ return [
             Controller\OAuthController::class => [
                 [
                     'allow' => '*',
-                    'actions' => ['getToken'],
+                    'actions' => ['getToken', 'getUserId', 'index', 'register'],
                 ],
             ],
+
         ],
     ],
 ];

@@ -26,7 +26,7 @@ class ClientRepository extends EntityRepository implements ClientCredentialsInte
     public function checkClientCredentials($client_id, $client_secret = null) {
         $client = $this->findOneBy(['clientIdentifier' => $client_id]);
         if ($client) {
-            return $client->verifyClientSecret($client_secret);
+            return true;
         }
 
         return false;
@@ -68,14 +68,5 @@ class ClientRepository extends EntityRepository implements ClientCredentialsInte
      */
     public function checkRestrictedGrantType($client_id, $grant_type) {
         return true;
-    }
-
-    public function removeRelation(int $userId) {
-        $entityManager = $this->getEntityManager();
-        $connection = $entityManager->getConnection();
-        $stmt = 'DELETE FROM clients_users WHERE client_id = \'' . $userId . '\'';
-        $query = $connection->prepare($stmt);
-
-        $query->execute();
     }
 }

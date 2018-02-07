@@ -12,30 +12,67 @@ return [
             'admin' => [
                 'type' => Segment::class,
                 'options' => [
-                    'route' => '/admin[/:action[/:id]]',
+                    'route' => '/admin',
                     'defaults' => [
                         'controller' => Controller\IndexController::class,
                         'action' => 'index',
                     ],
                 ],
+                'may_terminate' => true,
+                'child_routes' => [
+                    'dashboard' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/dashboard[/:action[/:id]]',
+                            'defaults' => [
+                                'controller' => Controller\IndexController::class,
+                                'action' => 'index',
+                            ],
+                        ],
+                    ],
+                    'apps' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/apps[/:action[/:id]]',
+                            'defaults' => [
+                                'controller' => Controller\ClientController::class,
+                                'action' => 'index',
+                            ],
+                        ],
+                    ],
+                    'user' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/user[/:action[/:id]]',
+                            'defaults' => [
+                                'controller' => Controller\UserController::class,
+                                'action' => 'index',
+                            ],
+                        ],
+                    ],
+                ]
             ],
-            'apps' => [
-                'type' => Segment::class,
-                'options' => [
-                    'route' => '/apps[/:action[/:id]]',
-                    'defaults' => [
-                        'controller' => Controller\ClientsController::class,
-                        'action' => 'index',
+        ],
+    ],
+    'console' => [
+        'router' => [
+            'routes' => [
+                'create-super-user' => [
+                    'options' => [
+                        'route' => 'create-super-user',
+                        'defaults' => [
+                            'controller' => Controller\IndexController::class,
+                            'action' => 'createSuperUser',
+                        ],
                     ],
                 ],
-            ],
-            'users' => [
-                'type' => Segment::class,
-                'options' => [
-                    'route' => '/users[/:action[/:id]]',
-                    'defaults' => [
-                        'controller' => Controller\IndexController::class,
-                        'action' => 'index',
+                'create-user' => [
+                    'options' => [
+                        'route' => 'create-user',
+                        'defaults' => [
+                            'controller' => Controller\IndexController::class,
+                            'action' => 'createUser',
+                        ],
                     ],
                 ],
             ],
@@ -45,34 +82,39 @@ return [
         'default' => [
             [
                 'label' => 'Dashboard',
-                'route' => 'admin',
+                'route' => 'admin/dashboard',
                 'icon' => 'fa fa-dashboard',
             ],
             [
                 'label' => 'Aplikacje',
-                'route' => 'apps',
+                'route' => 'admin/apps',
                 'icon' => 'fa fa-microchip',
                 'pages' => [
                     [
-                        'label' => 'Dodaj nową',
-                        'route' => 'apps',
+                        'label' => 'Dodaj aplikację',
+                        'route' => 'admin/apps',
                         'action' => 'add'
+                    ],
+                    [
+                        'label' => 'Lista',
+                        'route' => 'admin/apps',
+                        'action' => 'list'
                     ]
                 ]
             ],
             [
                 'label' => 'Użytkownicy',
-                'route' => 'users',
+                'route' => 'admin/user',
                 'icon' => 'fa fa-user',
                 'pages' => [
                     [
-                        'label' => 'Dodaj nowego',
-                        'route' => 'users',
+                        'label' => 'Dodaj użytkownika',
+                        'route' => 'admin/user',
                         'action' => 'add',
                     ],
                     [
                         'label' => 'Lista',
-                        'route' => 'users',
+                        'route' => 'admin/user',
                         'action' => 'list',
                     ]
                 ]
@@ -82,12 +124,8 @@ return [
     'controllers' => [
         'factories' => [
             Controller\IndexController::class => Factory\IndexControllerFactory::class,
-            Controller\ClientsController::class => Factory\ClientsControllerFactory::class,
-        ],
-    ],
-    'service_manager' => [
-        'factories' => [
-            'SystemNavigation' => Factory\SystemNavigationFactory::class,
+            Controller\ClientController::class => Factory\ClientsControllerFactory::class,
+            Controller\UserController::class => Factory\UserControllerFactory::class,
         ],
     ],
     'form_elements' => [
@@ -95,6 +133,8 @@ return [
             Form\AddClientAppForm::class => Factory\AddClientAppFormFactory::class,
             Form\ChangeClientUserGroupForm::class => Factory\ChangeClientUserGroupFormFactory::class,
             Form\AddClientGroupForm::class => Factory\AddClientGroupFormFactory::class,
+            Form\AddUserForm::class => Factory\AddUserFormFactory::class,
+            Form\UserGroupForm::class => Factory\UserGroupFormFactory::class,
         ],
     ],
     'access_filter' => [
@@ -104,8 +144,20 @@ return [
         'controllers' => [
             Controller\IndexController::class => [
                 [
-                    'allow' => '1',
+                    'allow' => '@',
                     'actions' => ['index'],
+                ],
+            ],
+            Controller\ClientController::class => [
+                [
+                    'allow' => '1',
+                    'actions' => ['add', 'show', 'edit', 'changeUserGroup', 'addClientGroup'],
+                ],
+            ],
+            Controller\UserController::class => [
+                [
+                    'allow' => '1',
+                    'actions' => ['add', 'list', 'userGroup', 'remove'],
                 ],
             ],
         ],

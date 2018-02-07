@@ -18,8 +18,8 @@ trait Main {
     /**
      * @var integer
      *
+     * @ORM\Column(name="id", type="integer", nullable=false, unique=true);
      * @ORM\Id
-     * @ORM\Column(name="id", type="integer", nullable=false);
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;

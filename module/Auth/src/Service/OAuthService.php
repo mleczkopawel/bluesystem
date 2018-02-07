@@ -16,7 +16,6 @@ use Auth\Entity\RefreshToken;
 use Auth\Entity\User;
 use Doctrine\ORM\EntityManager;
 use OAuth2\GrantType\ClientCredentials;
-use OAuth2\GrantType\UserCredentials;
 use OAuth2\Request;
 use OAuth2\Server;
 use OAuth2\GrantType\RefreshToken as OAuthRefreshToken;
@@ -72,7 +71,7 @@ class OAuthService {
         ]);
 
         $server->addGrantType(new ClientCredentials($clientStorage));
-        $server->addGrantType(new UserCredentials($userStorage));
+        $server->addGrantType(new UserCredentialsGrantType($userStorage));
         $server->addGrantType(new OAuthRefreshToken($refreshTokenStorage));
         $server->addGrantType(new OAuthRefreshToken($refreshTokenStorage, [
             'always_issue_new_refresh_token' => $this->config['always_issue_new_refresh_token'],

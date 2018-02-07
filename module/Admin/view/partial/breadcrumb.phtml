@@ -7,7 +7,7 @@
  */
 $pages = $this->pages;
 $pageName = null;
-foreach ($pages as $p => $pp) {
+foreach ($pages as $pp) {
     $pageName = $pp->getLabel();
 }
 ?>
@@ -20,7 +20,7 @@ foreach ($pages as $p => $pp) {
                     <li>
                         <a href="<?= $page->getHref() ?>"><?= $page->getLabel() ?></a>
                     </li>
-                    <?php else: ?>
+                <?php else: ?>
                     <li class="actve">
                         <strong><?= $page->getLabel() ?></strong>
                     </li>

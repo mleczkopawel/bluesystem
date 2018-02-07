@@ -1,0 +1,21 @@
+namespace Log\Entity;
+
+use Auth\Traits\ArrayOperations;
+use Auth\Traits\Main;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
+use Log\Entity\LogMain;
+
+/**
+ * Class <?= $name ?>
+ * @package Log\Entity
+ *
+ * @ORM\Table(name="<?= $tableName ?>")
+ * @ORM\Entity
+ */
+class <?= $name ?> extends LogMain {
+
+    use Main;
+    use ArrayOperations;
+
+}
